@@ -1,0 +1,50 @@
+{% load static i18n %}
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Local CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'events/main.css' %}">
+    {% if title %}
+      <title>Reorg - {{ title }}</title>
+    {% else %}
+      <title>Reorg</title>
+    {% endif %}
+  </head>
+  <body>
+    <header class="site-header">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">    
+                        <a class="align-self-center nav-item nav-link" href="{% url 'payment-home' %}">{% trans 'Home' %}</a>
+                    </div>
+                    <div class="navbar-nav">    
+                        <a class="align-self-center nav-item nav-link" href="#">Login</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="container">
+        <div class="row">
+            <div class="col-md-12">
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-success">{{message}}</div>
+                {% endfor %}
+              {% endif %}
+              {% block content %}{% endblock %}
+            </div>
+        </div>
+    </main>
+  </body>
+</html>

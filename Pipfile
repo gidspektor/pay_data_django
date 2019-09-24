@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pylint = "*"
+
+[packages]
+django = "~=2.2.4"
+psycopg2 = "*"
+djangorestframework = "*"
+requests = "~=2.12.1"
+django-crispy-forms = "*"
+pandas = "*"
+xlwt = "*"
+
+[requires]
+python_version = "3.7"
