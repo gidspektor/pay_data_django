@@ -1,19 +1,21 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, HttpResponse
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, TemplateView
 from django.views import View
 from django.contrib import messages
 from rest_framework.views import APIView
 from django.contrib.postgres.search import SearchVector, SearchQuery
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
 import requests, configparser, operator
 from . import models, tools, forms
 from functools import reduce
 import pandas as pd
 
-class Payment_home(ListView):
-  model = models.Person_payment_information
-  context_object_name = 'people'
-  template_name = 'payment/payment.html'
+class Home(TemplateView):
+  template_name = 'payment/home.html'
+
+class User_home(LoginRequiredMixin, TemplateView):
+  template_name = 'payment/user_home.html'
 
   def get_context_data(self, **kwargs):
     '''
@@ -21,11 +23,11 @@ class Payment_home(ListView):
     It sets context to have a an instance of the unregistered_user_form
     class and a comments_form class. It then returns the context.
     '''
-    context = super(Payment_home, self).get_context_data(*kwargs)
+    context = super(User_home, self).get_context_data(**kwargs)
     context['search_form'] = forms.Search_form()
     return context
 
-class Payment_search(ListView):
+class Payment_search(LoginRequiredMixin, ListView):
   context_object_name = 'people'
   template_name = 'payment/result.html'
 
@@ -55,8 +57,8 @@ class Payment_search(ListView):
     context = super(Payment_search, self).get_context_data(*kwargs)
     context['search_form'] = forms.Search_form()
     return context
-
-class Payment_detail_search(ListView):
+    
+class Payment_detail_search(LoginRequiredMixin, ListView):
   context_object_name = 'people'
   template_name = 'payment/result.html'
 
@@ -91,7 +93,7 @@ class Payment_detail_search(ListView):
     context['search_form'] = forms.Search_form()
     return context
 
-class Export_to_excel(View):
+class Export_to_excel(LoginRequiredMixin, View):
   def get(self, request):
     with open('payment/excel/results.xls', 'rb') as file:
       data = file.read()
@@ -101,7 +103,7 @@ class Export_to_excel(View):
       response['Content-Disposition'] = 'attachment; filename=results.xls'
     return response
 
-class Api(APIView):
+class Api(LoginRequiredMixin, APIView):
   def get(self, request):
     config = configparser.ConfigParser()
     config.read('config.ini')

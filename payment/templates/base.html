@@ -18,21 +18,30 @@
   </head>
   <body>
     <header class="site-header">
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarToggle">
-                    <div class="navbar-nav mr-auto">    
-                        <a class="align-self-center nav-item nav-link" href="{% url 'payment-home' %}">{% trans 'Home' %}</a>
-                    </div>
-                    <div class="navbar-nav">    
-                        <a class="align-self-center nav-item nav-link" href="#">Login</a>
-                    </div>
-                </div>
+      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mb-5">
+        <div class="container">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">    
+              <a class="align-self-center nav-item nav-link" href="{% url 'home' %}">Home</a>
             </div>
-        </nav>
+            <div class="navbar-nav">
+              {% if user.is_authenticated %}
+                <p>user: {{user.get_username }}</p>
+                <a class="align-self-center nav-item nav-link" href="{% url 'logout' %}">
+                  Logout
+                </a>
+              {% else %}
+                <a class="align-self-center nav-item nav-link" href="{% url 'login' %}">
+                  Login
+                </a>
+              {% endif %}  
+            </div>
+          </div>
+        </div>
+      </nav>
     </header>
     <main role="main" class="container">
         <div class="row">

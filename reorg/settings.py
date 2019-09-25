@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'crispy_forms',
-    'rest_framework',
     'payment.apps.PaymentConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -127,3 +126,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REDIRECT_URL = '/user_home/'
